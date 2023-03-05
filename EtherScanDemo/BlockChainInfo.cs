@@ -1,6 +1,7 @@
 ﻿using EtherScanDemo.Helper;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 using System.Globalization;
 
 
@@ -13,6 +14,7 @@ namespace EtherScanDemo
         private readonly string _apiKey;
         private DbIntegration _dbIntegration;
         private readonly string _logsPath;
+        private Stopwatch _sw;
 
         public BlockChainInfo()
         {
@@ -20,18 +22,24 @@ namespace EtherScanDemo
             _apiKey = Environment.GetEnvironmentVariable("APIKey");
             _dbIntegration = new DbIntegration();
             _logsPath = Environment.GetEnvironmentVariable("LogsPath");
+            _sw = new Stopwatch();
         }
 
         public async Task ScanBlockHandling(int minRange, int maxRange)
         {
             while (minRange <= maxRange)
             {
+                _sw.Restart();
                 var runningBlock = String.Format("0x{0:X}", minRange);
 
                 Console.WriteLine($"==== Get Block By Number ({runningBlock}) ====");
                 File.AppendAllText(_logsPath, $"==== Get Block By Number ({runningBlock}) ====");
 
                 var blockByNumber = await GetBlockByNumbers(runningBlock);
+
+                var processingTime = _sw.Elapsed.ToString(@"m\:ss\.fff");
+                Console.WriteLine($"Processing time: {processingTime}");
+                File.AppendAllText(_logsPath, $"Processing time: {processingTime}");
 
                 Console.WriteLine(blockByNumber.ToString());
                 File.AppendAllText(_logsPath, blockByNumber.ToString());
@@ -41,7 +49,12 @@ namespace EtherScanDemo
                     Console.WriteLine($"\nBegin inserting Blocks - Block No: ({runningBlock})");
                     File.AppendAllText(_logsPath, $"\nBegin inserting Blocks - Block No: ({runningBlock})");
 
+                    _sw.Restart();
                     var resultInsertBlock = await InsertBlock(blockByNumber["result"], runningBlock);
+
+                    processingTime = _sw.Elapsed.ToString(@"m\:ss\.fff");
+                    Console.WriteLine($"Processing time: {processingTime}");
+                    File.AppendAllText(_logsPath, $"Processing time: {processingTime}");
 
                     Console.WriteLine($"Status: {resultInsertBlock}");
                     File.AppendAllText(_logsPath, $"Status: {resultInsertBlock}");
@@ -49,10 +62,15 @@ namespace EtherScanDemo
                     Console.WriteLine($"\n\n ==== GetBlockTransactionCountByNumber ({runningBlock}) ====");
                     File.AppendAllText(_logsPath, $"\n\n ==== GetBlockTransactionCountByNumber ({runningBlock}) ====");
 
+                    _sw.Restart();
                     var totalBlockByNum = await GetBlockTransactionCountByNumber(runningBlock);
 
-                    Console.WriteLine($"Total Record(s): ${totalBlockByNum.ToString()}" );
-                    File.AppendAllText(_logsPath, $"Total Record(s): ${totalBlockByNum.ToString()}");
+                    processingTime = _sw.Elapsed.ToString(@"m\:ss\.fff");
+                    Console.WriteLine($"Processing time: {processingTime}");
+                    File.AppendAllText(_logsPath, $"Processing time: {processingTime}");
+
+                    Console.WriteLine($"Total Record(s): ${totalBlockByNum}" );
+                    File.AppendAllText(_logsPath, $"Total Record(s): ${totalBlockByNum}");
 
                     if (totalBlockByNum > 0)
                     {
@@ -61,14 +79,25 @@ namespace EtherScanDemo
                             Console.WriteLine($"\n\n ==== GetTransactionByBlockNumberAndIndex ==== (i: {i}, Block No {runningBlock})");
                             File.AppendAllText(_logsPath, $"\n\n ==== GetTransactionByBlockNumberAndIndex ==== (i: {i}, Block No {runningBlock})");
 
+                            _sw.Restart();
                             var transactionInfo = await GetTransactionByBlockNumberAndIndex(i, runningBlock);
+
+                            processingTime = _sw.Elapsed.ToString(@"m\:ss\.fff");
+                            Console.WriteLine($"Processing time: {processingTime}");
+                            File.AppendAllText(_logsPath, $"Processing time: {processingTime}");
+
                             Console.WriteLine(transactionInfo.ToString());
                             File.AppendAllText(_logsPath, transactionInfo.ToString());
 
                             Console.WriteLine($"\nBegin Inserting Transaction - (i: {i}, Block No {runningBlock})");
                             File.AppendAllText(_logsPath, $"\nBegin Inserting Transaction - (i: {i}, Block No {runningBlock})");
 
+                            _sw.Restart();
                             var resultInsertTransaction = await InsertTransaction(transactionInfo["result"], runningBlock);
+
+                            processingTime = _sw.Elapsed.ToString(@"m\:ss\.fff");
+                            Console.WriteLine($"Processing time: {processingTime}");
+                            File.AppendAllText(_logsPath, $"Processing time: {processingTime}");
 
                             Console.WriteLine($"Status: {resultInsertTransaction}");
                             File.AppendAllText(_logsPath, $"Status: {resultInsertTransaction}");
