@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32811.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EtherScanDemo", "EtherScanDemo\EtherScanDemo.csproj", "{DBF0D3D4-C081-4601-B46D-5DAD6E52A880}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DBF0D3D4-C081-4601-B46D-5DAD6E52A880}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBF0D3D4-C081-4601-B46D-5DAD6E52A880}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBF0D3D4-C081-4601-B46D-5DAD6E52A880}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBF0D3D4-C081-4601-B46D-5DAD6E52A880}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E2D8BB1D-955E-46D3-B8D7-DC3AD3762DF4}
+	EndGlobalSection
+EndGlobal
