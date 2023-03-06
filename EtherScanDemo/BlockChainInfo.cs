@@ -156,8 +156,7 @@ namespace EtherScanDemo
                 new MySqlParameter("in_gasLimit", param["gasLimit"] != null ? FromHexToDecimal(param["gasLimit"].ToString()) : -1),
                 new MySqlParameter("in_gasUsed", param["gasUsed"] != null ? FromHexToDecimal(param["gasUsed"].ToString()) : -1)
                 };
-                _dbIntegration.ExecuteCommand("SPP_INSERT_BLOCK", lstParam);
-                return true;
+                return _dbIntegration.ExecuteCommand("SPP_INSERT_BLOCK", lstParam);
             }
             catch(Exception ex)
             {
@@ -185,8 +184,7 @@ namespace EtherScanDemo
                 new MySqlParameter("in_gasPrice", param["gasPrice"] != null ? FromHexToDecimal(param["gasPrice"].ToString()) : -1),
                 new MySqlParameter("in_transactionIndex", param["transactionIndex"] != null ? FromHexToDecimal(param["transactionIndex"].ToString()) : -1)
                 };
-                _dbIntegration.ExecuteCommand("SPP_INSERT_TRANSACTION", lstParam);
-                return true;
+                return _dbIntegration.ExecuteCommand("SPP_INSERT_TRANSACTION", lstParam);
             }
             catch (Exception)
             {
