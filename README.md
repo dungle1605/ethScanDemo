@@ -1,4 +1,4 @@
-1. RUN SCRIPT WITH WINDOW POWERSHELL IN "InitConfig.ps1" file FOR GENERATING VALUES FOR SECRETS FILE
+1. RUN SCRIPT WITH WINDOW POWERSHELL IN "EtherScanDemo\InitConfig.ps1" file FOR GENERATING VALUES FOR SECRETS FILE
 
 2. IMPORT BACKUP FILE TO XAMPP
    Refer to this link: http://www.ihp.sinica.edu.tw/dashboard/docs/backup-restore-mysql.html
